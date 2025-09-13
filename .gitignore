@@ -31,3 +31,9 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### env ###
+.env
+
+### db mount data ###
+db_data
