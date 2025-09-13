@@ -1,18 +1,19 @@
 services:
   mariadb:
-    container_name: maria-db
-    image: mariadb:latest
-    environment:
-      MYSQL_ROOT_PASSWORD: your_root_password # Replace with a strong password
-      MYSQL_DATABASE: your_database_name # Optional: Create a default database
-      MYSQL_USER: your_username # Optional: Create a default user
-      MYSQL_PASSWORD: your_user_password # Optional: Password for the default user
+    container_name: mariadb
+    image: mariadb:12.0.2
+    restart: always
     volumes:
-      - 2025_mariadb_data:/var/lib/mysql
+      - ./db_data:/var/lib/mysql
     ports:
       - "3306:3306"
-    restart: always
-
-volumes:
-  2025_mariadb_data:
-    name: 2025_mariadb_data
+    environment:
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
