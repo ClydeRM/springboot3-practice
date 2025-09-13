@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: example
+
+  datasource:
+    url: ${MYSQL_CONNECTION_URL}
+    username: ${MYSQL_USER}
+    password: ${MYSQL_PASSWORD}
+    driver-class-name: org.mariadb.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: none   # cause use flyway tool
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+    database: mysql
+    database-platform: org.hibernate.dialect.MariaDBDialect
+
+  flyway:
+    enabled: true
+    locations: classpath:db/migration # default path to src/main/resources/db/migration/
